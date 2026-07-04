@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@splinetool/react-spline": "latest",
+    "@supabase/supabase-js": "^2.110.0",
     "@vitejs/plugin-react": "latest",
     "clsx": "latest",
     "express": "^4.22.2",

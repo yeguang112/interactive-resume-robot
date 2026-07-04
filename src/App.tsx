@@ -8,6 +8,7 @@ import ChatPanel from "@/components/ChatPanel";
 import MusicButton from "@/components/MusicButton";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
+const AdminPanel = lazy(() => import("@/components/AdminPanel"));
 const sceneUrl = "https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode";
 
 const nameTop = ["I", "'", "M", " ", " ", "M", "A"];
@@ -544,7 +545,37 @@ function Contact() {
 
 export default function App() {
   const [chatMode, setChatMode] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { playing, loading, error, currentIndex, tracks, toggle: toggleBGM, nextTrack, prevTrack, selectTrack } = useBGM();
+
+  useEffect(() => {
+    // 检测 ?admin=1 参数
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("admin") === "1") {
+      setIsAdmin(true);
+    }
+  }, []);
+
+  // 管理后台模式 — 完全独立渲染，不影响主页
+  if (isAdmin) {
+    return (
+      <Suspense
+        fallback={
+          <div className="min-h-screen bg-[#050505] flex items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-white/30" />
+          </div>
+        }
+      >
+        <AdminPanel onBack={() => {
+          setIsAdmin(false);
+          // 清除 URL 中的 admin 参数
+          const url = new URL(window.location.href);
+          url.searchParams.delete("admin");
+          window.history.pushState({}, "", url.toString());
+        }} />
+      </Suspense>
+    );
+  }
 
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
