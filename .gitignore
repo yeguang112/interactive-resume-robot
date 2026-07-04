@@ -1,0 +1,12 @@
+﻿node_modules/
+dist/
+.codex-temp/
+.DS_Store
+.env
+.env.*
+animations/
+backgrounds/
+canvas/
+component/
+text animations/
+reactbits_sync_report.json

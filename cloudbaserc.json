@@ -1,0 +1,16 @@
+{
+  "version": "2.0",
+  "envId": "{{ENV_ID}}",
+  "run": {
+    "containers": [
+      {
+        "name": "resume-robot",
+        "path": "/",
+        "port": 3000,
+        "env": {
+          "DEEPSEEK_API_KEY": "{{DEEPSEEK_API_KEY}}"
+        }
+      }
+    ]
+  }
+}

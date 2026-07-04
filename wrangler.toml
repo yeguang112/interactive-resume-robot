@@ -1,0 +1,6 @@
+name = "ai-digital-twin"
+main = "worker/chat-worker.ts"
+compatibility_date = "2024-09-23"
+
+# 部署后设置密钥：
+# wrangler secret put DEEPSEEK_API_KEY

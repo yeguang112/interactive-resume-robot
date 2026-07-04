@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Font Test</title>
+  <style>
+    @font-face {
+      font-family: "Smiley Sans";
+      src: url("./src/fonts/SmileySans-Oblique.ttf") format("truetype");
+      font-weight: 400 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "得意黑";
+      src: url("./src/fonts/SmileySans-Oblique.ttf") format("truetype");
+      font-weight: 400 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Smiley Sans Oblique";
+      src: url("./src/fonts/SmileySans-Oblique.ttf") format("truetype");
+      font-weight: 400 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    body {
+      background: #111;
+      color: #fff;
+      font-size: 48px;
+      padding: 40px;
+    }
+    .test1 { font-family: "Smiley Sans", sans-serif; }
+    .test2 { font-family: "得意黑", sans-serif; }
+    .test3 { font-family: "Smiley Sans Oblique", sans-serif; }
+    .test4 { font-family: "Smiley Sans", sans-serif; font-style: oblique; }
+  </style>
+</head>
+<body>
+  <p class="test1">Test 1 - Smiley Sans: 马承旭</p>
+  <p class="test2">Test 2 - 得意黑: 马承旭</p>
+  <p class="test3">Test 3 - Smiley Sans Oblique: 马承旭</p>
+  <p class="test4">Test 4 - Smiley Sans + oblique: 马承旭</p>
+</body>
+</html>

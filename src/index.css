@@ -1,0 +1,535 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Manrope:wght@500;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --radius: 0.625rem;
+  --background: 0 0% 3.2%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 5.5%;
+  --card-foreground: 0 0% 98%;
+  --primary: 173 84% 56%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 14%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14%;
+  --muted-foreground: 0 0% 68%;
+  --accent: 29 97% 55%;
+  --accent-foreground: 0 0% 4%;
+  --border: 0 0% 100% / 0.12;
+  --input: 0 0% 100% / 0.14;
+  --ring: 173 84% 56%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #050505;
+  color: hsl(var(--foreground));
+  font-family: var(--font-display);
+  font-style: oblique;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+.animate-spotlight {
+  animation: spotlight 2s ease 0.25s 1 forwards;
+}
+
+.tool-button {
+  display: inline-grid;
+  height: 2.5rem;
+  width: 2.5rem;
+  place-items: center;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.tool-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.tool-button:focus-visible,
+button:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 3px;
+}
+
+.text-layer-eyebrow {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
+}
+
+.text-layer-hero {
+  margin: 1rem 0 0;
+  max-width: 920px;
+  font-family: "Bricolage Grotesque", ui-serif, Georgia, serif;
+  font-style: normal;
+  font-size: clamp(4.4rem, 11vw, 11.5rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 6px 44px rgba(0, 0, 0, 0.82), 0 0 40px rgba(255, 255, 255, 0.08);
+}
+
+.text-layer-block {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.86), 0 0 34px rgba(255, 255, 255, 0.08);
+}
+
+.text-layer-block h2 {
+  margin: 0.9rem 0 0;
+  font-family: "Bricolage Grotesque", ui-serif, Georgia, serif;
+  font-style: normal;
+  font-size: clamp(2.45rem, 4.7vw, 5.4rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.text-layer-block p:last-child {
+  margin: 1.4rem 0 0;
+  font-size: clamp(1.05rem, 1.9vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+@media (max-width: 760px) {
+  .text-layer-hero {
+    font-size: clamp(3.5rem, 18vw, 6.6rem);
+  }
+
+  .text-layer-block h2 {
+    font-size: clamp(2.7rem, 13vw, 5rem);
+  }
+}
+
+.text-layer-spread {
+  display: grid;
+  grid-template-columns: minmax(24rem, 40rem) minmax(5vw, 1fr) minmax(24rem, 40rem);
+  gap: clamp(1rem, 2.5vw, 3rem);
+}
+
+.text-layer-spread > :first-child {
+  grid-column: 1;
+}
+
+.text-layer-spread > :last-child {
+  grid-column: 3;
+}
+
+@media (max-width: 980px) {
+  .text-layer-spread {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7rem;
+  }
+
+  .text-layer-spread > :last-child {
+    align-self: flex-end;
+    max-width: min(40rem, 92vw);
+  }
+}
+
+
+@font-face {
+  font-family: "得意黑";
+  src: url("./fonts/SmileySans-Oblique.ttf?v=2") format("truetype");
+  font-weight: 400;
+  font-style: oblique;
+  font-display: swap;
+}
+
+:root {
+  --font-display: "得意黑", "Smiley Sans Oblique", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-display);
+  --neon: #7df9ff;
+  --magenta: #ff2d92;
+  --violet: #8b5cf6;
+  --acid: #c8ff00;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.font-mono,
+.font-display {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--magenta);
+  color: #050208;
+}
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -100%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.6s steps(4) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3%, 4%); }
+  50% { transform: translate(4%, -2%); }
+  75% { transform: translate(-2%, -4%); }
+  100% { transform: translate(3%, 3%); }
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(236, 232, 244, 0.55);
+  color: transparent;
+}
+
+.text-stroke-neon {
+  -webkit-text-stroke: 1px var(--neon);
+  color: transparent;
+}
+
+.gradient-text {
+  background: linear-gradient(110deg, #7df9ff 10%, #8b5cf6 45%, #ff2d92 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glitch {
+  position: relative;
+}
+
+.glitch:hover {
+  animation: glitch-skew 0.3s linear infinite;
+}
+
+@keyframes glitch-skew {
+  0% { transform: skewX(0deg); }
+  20% { transform: skewX(-2deg) translateX(2px); }
+  40% { transform: skewX(1deg) translateX(-2px); }
+  60% { transform: skewX(-1deg); }
+  80% { transform: skewX(2deg) translateX(1px); }
+  100% { transform: skewX(0deg); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee 32s linear infinite reverse;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 6px rgba(125, 249, 255, 0.5); }
+  50% { box-shadow: 0 0 18px rgba(125, 249, 255, 0.9); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+.h-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(125, 249, 255, 0.5), rgba(255, 45, 146, 0.5), transparent);
+}
+
+.resume-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(32rem, 0.95fr) minmax(30rem, 0.78fr);
+  align-items: end;
+  gap: clamp(2rem, 8vw, 10rem);
+}
+
+.resume-section {
+  pointer-events: none;
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: minmax(28rem, 42rem) minmax(32rem, 48rem);
+  gap: clamp(2rem, 9vw, 12rem);
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: clamp(1.25rem, 3vw, 3rem);
+}
+
+.resume-kicker {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.86);
+}
+
+.resume-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.4vw, 5.8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: 0;
+  text-shadow: 0 7px 38px rgba(0, 0, 0, 0.88);
+}
+
+.resume-section p,
+.resume-section h2,
+.resume-section h3,
+.resume-section span,
+.resume-contact {
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.86), 0 0 34px rgba(255, 255, 255, 0.08);
+}
+
+.skill-tag {
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid currentColor;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.skill-tag.neon { color: var(--neon); }
+.skill-tag.magenta { color: var(--magenta); }
+.skill-tag.violet { color: var(--violet); }
+.skill-tag.acid { color: var(--acid); }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050208;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#7df9ff, #ff2d92);
+  border-radius: 3px;
+}
+
+@media (max-width: 980px) {
+  .resume-hero-grid,
+  .resume-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .resume-section {
+    padding-inline: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .resume-title {
+    font-size: clamp(2.8rem, 14vw, 4.5rem);
+  }
+}
+
+
+.hero-cn-name {
+  display: block;
+  margin-top: clamp(0.55rem, 1.2vw, 1.2rem);
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 5vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  color: rgba(236, 232, 244, 0.86);
+  text-shadow: 0 6px 34px rgba(0, 0, 0, 0.88), 0 0 28px rgba(125, 249, 255, 0.12);
+}
+
+/* Latest spacing/type refinements */
+.hero-cn-name {
+  font-size: clamp(1.15rem, 2.5vw, 2.6rem);
+}
+
+.resume-section {
+  padding-top: clamp(10rem, 22vh, 18rem) !important;
+  padding-bottom: clamp(10rem, 22vh, 18rem) !important;
+}
+
+.h-line {
+  margin-block: clamp(3rem, 8vh, 6rem);
+}
+
+#contact {
+  padding-top: clamp(10rem, 22vh, 18rem) !important;
+  padding-bottom: clamp(10rem, 22vh, 18rem) !important;
+}
+
+/* Current hero second-line Chinese name + contact tail spacing */
+.resume-hero-grid h1 > span:nth-child(2) {
+  font-size: clamp(2.4rem, 5.25vw, 5.6rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.18em;
+}
+
+#contact {
+  padding-bottom: clamp(4rem, 10vh, 8rem) !important;
+}
+
+#contact footer {
+  margin-top: clamp(4rem, 8vh, 7rem) !important;
+}
+
+/* Improve wrapped Chinese resume headings readability */
+.resume-title {
+  line-height: 1.1 !important;
+}
+
+.resume-title .gradient-text,
+.resume-title .text-stroke,
+.resume-title .text-stroke-neon {
+  line-height: inherit;
+}
+
+/* Requested hero intro and experience-column placement */
+.resume-hero-grid {
+  grid-template-columns: minmax(34rem, 0.88fr) minmax(18vw, 1fr) !important;
+  align-items: start !important;
+}
+
+.resume-hero-grid > p {
+  grid-column: 1 !important;
+  max-width: 38rem !important;
+  margin-top: clamp(3rem, 8vh, 6rem) !important;
+  align-self: start !important;
+}
+
+#experience > div:last-child {
+  transform: translateX(clamp(1.5rem, 5vw, 5rem));
+}
+
+@media (max-width: 980px) {
+  .resume-hero-grid > p {
+    margin-top: 2.5rem !important;
+  }
+
+  #experience > div:last-child {
+    transform: none;
+  }
+}
+
+/* Tighten hero intro spacing under the name */
+.resume-hero-grid > p {
+  margin-top: clamp(1.15rem, 3vh, 2rem) !important;
+}
+
+/* Further tighten hero intro spacing under the name */
+.resume-hero-grid > p {
+  margin-top: 0.55rem !important;
+}
+
+/* Final hero intro spacing adjustment */
+.resume-hero-grid > p {
+  margin-top: 0.1rem !important;
+}
+
+/* Place hero intro in the intended red-box area */
+.resume-hero-grid {
+  row-gap: 0.35rem !important;
+  column-gap: clamp(2rem, 8vw, 10rem) !important;
+}
+
+.resume-hero-grid > p {
+  margin-top: 0 !important;
+  max-width: 42rem !important;
+}
+
+/* Responsive edge alignment for foreground sections */
+.resume-section {
+  display: grid !important;
+  grid-template-columns: minmax(20rem, min(42vw, 48rem)) minmax(24rem, min(45vw, 54rem)) !important;
+  justify-content: space-between !important;
+  gap: clamp(2rem, 5vw, 7rem) !important;
+  padding-left: clamp(1.5rem, 4vw, 5rem) !important;
+  padding-right: clamp(1.5rem, 4vw, 5rem) !important;
+}
+
+.resume-section > :first-child {
+  justify-self: start;
+  max-width: min(42vw, 48rem);
+}
+
+.resume-section > :last-child {
+  justify-self: end;
+  width: 100%;
+  max-width: min(45vw, 54rem);
+}
+
+@media (max-width: 980px) {
+  .resume-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4rem !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  .resume-section > :first-child,
+  .resume-section > :last-child {
+    max-width: none;
+    width: 100%;
+  }
+}
