@@ -86,7 +86,7 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
     [autoRead, speak]
   );
 
-  const { messages, input, setInput, loading, streamingContent, sendMessage, handleSubmit } =
+  const { messages, input, setInput, loading, streamingContent, isAdminMode, sendMessage, handleSubmit } =
     useAIChat({ onStreamComplete });
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -212,12 +212,18 @@ export default function ChatPanel({ onClose }: ChatPanelProps) {
 
       {/* Input */}
       <form onSubmit={handleSubmit} className="border-t border-white/8 p-4">
+        {isAdminMode && (
+          <div className="mb-2 flex items-center gap-2 rounded-lg border border-[var(--acid)]/30 bg-[rgba(123,239,0,0.08)] px-3 py-1.5 text-[11px] text-[var(--acid)]">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--acid)]" />
+            管理员模式已开启 — 消息将直接写入知识库
+          </div>
+        )}
         <div className="flex items-center gap-2.5">
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="输入消息..."
+            placeholder={isAdminMode ? "输入要记录的知识..." : "输入消息..."}
             disabled={loading}
             className="flex-1 rounded-xl border border-white/10 bg-[rgba(255,255,255,0.03)] px-4 py-3 text-[14px] text-white/85 placeholder-white/25 outline-none transition-colors focus:border-[var(--neon)]/40 disabled:opacity-50"
           />

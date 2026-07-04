@@ -14,6 +14,8 @@ export const API_ENDPOINT =
 export const DEEPSEEK_API_KEY =
   import.meta.env.VITE_DEEPSEEK_API_KEY || import.meta.env.DEEPSEEK_API_KEY;
 
+export const KB_ADMIN_PASSWORD = import.meta.env.VITE_KB_ADMIN_PASSWORD as string | undefined;
+
 export const IS_DIRECT_API =
   import.meta.env.PROD ||
   import.meta.env.VITE_API_ENDPOINT?.includes("deepseek.com") ||
