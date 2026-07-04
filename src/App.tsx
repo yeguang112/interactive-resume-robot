@@ -6,6 +6,7 @@ import { useBGM } from "@/lib/useBGM";
 import ChatBot from "@/components/ChatBot";
 import ChatPanel from "@/components/ChatPanel";
 import MusicButton from "@/components/MusicButton";
+import ButterflyCursor from "@/components/ButterflyCursor";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
 const AdminPanel = lazy(() => import("@/components/AdminPanel"));
@@ -602,7 +603,7 @@ export default function App() {
   return (
     <main className="grain relative min-h-screen bg-transparent text-[#ece8f4]">
       <RobotBackground chatMode={chatMode} onClick={activateChat} />
-      <Cursor />
+      <ButterflyCursor />
       <Nav chatMode={chatMode} onBack={deactivateChat} musicButton={
         <MusicButton
           playing={playing}
