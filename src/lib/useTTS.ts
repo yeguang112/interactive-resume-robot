@@ -19,9 +19,27 @@ export function useTTS() {
     };
   }, []);
 
+  /** 清理文本中的 Markdown 符号，避免 TTS 读出 ** 等符号 */
+  const cleanTextForTTS = (text: string): string => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, "$1")   // **粗体** → 粗体
+      .replace(/\*(.*?)\*/g, "$1")       // *斜体* → 斜体
+      .replace(/`(.*?)`/g, "$1")         // `代码` → 代码
+      .replace(/#{1,6}\s?/g, "")         // ### 标题 → 标题
+      .replace(/\[(.*?)\]\(.*?\)/g, "$1") // [文字](链接) → 文字
+      .replace(/(\n\d+\.\s)/g, "。")      // 数字列表换行 → 用句号分隔
+      .replace(/\n/g, "。")              // 换行 → 句号
+      .replace(/\s+/g, " ")              // 多个空格 → 一个空格
+      .trim();
+  };
+
   /** 朗读文本 — 调用 Edge TTS 获取音频并播放 */
   const speak = useCallback(async (text: string) => {
     if (!text.trim()) return;
+
+    // 清理 Markdown 符号，避免 TTS 读出 ** 等
+    const cleanedText = cleanTextForTTS(text);
+    if (!cleanedText) return;
 
     // 停止当前播放
     abortRef.current?.abort();
@@ -35,7 +53,7 @@ export function useTTS() {
       const response = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ text: cleanedText }),
         signal: controller.signal,
       });
 
