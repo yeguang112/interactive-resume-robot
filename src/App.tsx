@@ -544,7 +544,7 @@ function Contact() {
 
 export default function App() {
   const [chatMode, setChatMode] = useState(false);
-  const { playing, loading, toggle: toggleBGM } = useBGM();
+  const { playing, loading, error, currentIndex, tracks, toggle: toggleBGM, nextTrack, prevTrack, selectTrack } = useBGM();
 
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
@@ -573,7 +573,17 @@ export default function App() {
       <RobotBackground chatMode={chatMode} onClick={activateChat} />
       <Cursor />
       <Nav chatMode={chatMode} onBack={deactivateChat} musicButton={
-        <MusicButton playing={playing} loading={loading} error={false} onToggle={toggleBGM} />
+        <MusicButton
+          playing={playing}
+          loading={loading}
+          error={error}
+          currentIndex={currentIndex}
+          tracks={tracks}
+          onToggle={toggleBGM}
+          onNext={nextTrack}
+          onPrev={prevTrack}
+          onSelect={selectTrack}
+        />
       } />
 
       <AnimatePresence mode="wait">
