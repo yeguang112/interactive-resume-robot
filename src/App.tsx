@@ -239,7 +239,7 @@ function Cursor() {
   );
 }
 
-function Nav({ chatMode, onBack }: { chatMode: boolean; onBack: () => void }) {
+function Nav({ chatMode, onBack, musicButton }: { chatMode: boolean; onBack: () => void; musicButton?: ReactNode }) {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 90, damping: 26 });
   const links = [
@@ -252,7 +252,7 @@ function Nav({ chatMode, onBack }: { chatMode: boolean; onBack: () => void }) {
   return (
     <>
       <motion.div style={{ scaleX }} className="fixed left-0 top-0 z-[70] h-[2px] w-full origin-left bg-gradient-to-r from-[#7df9ff] via-[#8b5cf6] to-[#ff2d92]" />
-      <motion.nav initial={{ y: -60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="pointer-events-auto fixed right-6 top-5 z-[70] flex gap-5 font-mono text-[11px] uppercase tracking-[0.25em] md:right-14">
+      <motion.nav initial={{ y: -60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="pointer-events-auto fixed right-6 top-5 z-[70] flex items-center gap-5 font-mono text-[11px] uppercase tracking-[0.25em] md:right-14">
         {chatMode ? (
           <button
             onClick={onBack}
@@ -275,10 +275,11 @@ function Nav({ chatMode, onBack }: { chatMode: boolean; onBack: () => void }) {
             </a>
           ))
         )}
+        {musicButton}
       </motion.nav>
     </>
-  );
-}
+    );
+  }
 
 function Reveal({ children, delay = 0, direction = "up", className = "" }: { children: ReactNode; delay?: number; direction?: "up" | "left" | "right" | "skew"; className?: string }) {
   const variants = {
@@ -571,7 +572,9 @@ export default function App() {
     <main className="grain relative min-h-screen bg-transparent text-[#ece8f4]">
       <RobotBackground chatMode={chatMode} onClick={activateChat} />
       <Cursor />
-      <Nav chatMode={chatMode} onBack={deactivateChat} />
+      <Nav chatMode={chatMode} onBack={deactivateChat} musicButton={
+        <MusicButton playing={playing} loading={loading} error={false} onToggle={toggleBGM} />
+      } />
 
       <AnimatePresence mode="wait">
         {chatMode ? (
@@ -621,11 +624,6 @@ export default function App() {
 
       {/* Floating chat button - only in intro mode */}
       {!chatMode && <ChatBot />}
-
-      {/* Floating music button */}
-      <div className="fixed bottom-6 right-6 z-[70]">
-        <MusicButton playing={playing} loading={loading} onToggle={toggleBGM} />
-      </div>
     </main>
   );
 }
