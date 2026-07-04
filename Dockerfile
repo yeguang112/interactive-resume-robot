@@ -2,14 +2,11 @@ FROM node:18-slim
 
 WORKDIR /app
 
-# 复制 package 文件
+# 复制 package 文件（利用 Docker 缓存层）
 COPY package.json package-lock.json* ./
 
 # 安装所有依赖（包括 devDependencies 用于构建）
 RUN npm install
-
-# 安装 express（生产服务器）
-RUN npm install express
 
 # 复制源代码
 COPY . .
