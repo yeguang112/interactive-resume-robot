@@ -2,8 +2,10 @@
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useBGM } from "@/lib/useBGM";
 import ChatBot from "@/components/ChatBot";
 import ChatPanel from "@/components/ChatPanel";
+import MusicButton from "@/components/MusicButton";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
 const sceneUrl = "https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode";
@@ -541,6 +543,7 @@ function Contact() {
 
 export default function App() {
   const [chatMode, setChatMode] = useState(false);
+  const { playing, loading, toggle: toggleBGM } = useBGM();
 
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
@@ -618,6 +621,11 @@ export default function App() {
 
       {/* Floating chat button - only in intro mode */}
       {!chatMode && <ChatBot />}
+
+      {/* Floating music button */}
+      <div className="fixed bottom-6 right-6 z-[70]">
+        <MusicButton playing={playing} loading={loading} onToggle={toggleBGM} />
+      </div>
     </main>
   );
 }
