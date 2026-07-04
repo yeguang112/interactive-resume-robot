@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, type FormEvent } from "react";
 import { SYSTEM_PROMPT } from "@/lib/ai-prompt";
-import { API_ENDPOINT } from "@/lib/api-config";
+import { API_ENDPOINT, DEEPSEEK_API_KEY, IS_DIRECT_API } from "@/lib/api-config";
 
 export interface Message {
   role: "user" | "assistant" | "system";
@@ -36,19 +36,35 @@ export function useAIChat(options?: UseAIChatOptions) {
         ...newMessages,
       ];
 
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const body: Record<string, unknown> = { messages: apiMessages };
+
+      if (IS_DIRECT_API) {
+        // 生产环境直接调用 DeepSeek API（如 GitHub Pages）
+        if (!DEEPSEEK_API_KEY) {
+          throw new Error("DeepSeek API Key 未配置");
+        }
+        headers["Authorization"] = `Bearer ${DEEPSEEK_API_KEY}`;
+        body.model = "deepseek-chat";
+        body.stream = true;
+        body.max_tokens = 1024;
+        body.temperature = 0.8;
+      }
+
       const response = await fetch(API_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: apiMessages }),
+        headers,
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
+        const errorText = await response.text().catch(() => "");
+        throw new Error(`API error: ${response.status} ${errorText}`);
       }
 
       const contentType = response.headers.get("Content-Type") || "";
 
-      if (contentType.includes("text/event-stream")) {
+      if (contentType.includes("text/event-stream") || response.headers.get("Transfer-Encoding") === "chunked") {
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
         let fullContent = "";
@@ -90,6 +106,7 @@ export function useAIChat(options?: UseAIChatOptions) {
         onStreamCompleteRef.current?.(content);
       }
     } catch (error) {
+      console.error("Chat error:", error);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "连接出了点问题，请稍后重试。" },
